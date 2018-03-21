@@ -1,7 +1,8 @@
+
 # Projet Tri - Base de la programmation - Eric Derasse (2017)
 # Auteurs :
 
-# codage utilisé pour les accents
+# codage utilisÃ© pour les accents
 # coding=utf-8
 
 import os  
@@ -14,8 +15,8 @@ import time
 
 # Selection des fonctions
 def Menu(): 
-    # Déclaration du tableau principal
-    maTable = [ int(z) for z in open('random.txt', 'r').read().split() ]
+    # DÃ©claration du tableau principal
+    maTable = []
     reponse = 1
 
     while reponse < 9: 
@@ -89,7 +90,7 @@ def selectMenuTriRapide(maTable):
 def selectMenuReverse(maTable):
     print ("Voici les nombres selectionnes : ")
     print(maTable)
-    print ("Voici les nombres inversés : ")
+    print ("Voici les nombres inversÃ©s : ")
     Reverse(maTable)
     
 def selectMenuSauvegarde(maTable) :
@@ -98,7 +99,7 @@ def selectMenuSauvegarde(maTable) :
 	
 	
 #**********************************************************************
-# Couche logique (Métier)
+# Couche logique (MÃ©tier)
 #**********************************************************************
 
 def Reverse(maTable):
@@ -112,20 +113,19 @@ def Reverse(maTable):
         x = x - 1
     print (maTable)
         
-def triRapide(maTable, gauche, droite):
-  ChoixPivot(maTable,0,len(maTable)-1)
-  partitionement(maTable,premier,dernier)
-def ChoixPivot(maTable,premier,dernier):
+
+def triRapide(tableau,premier,dernier):
+   
    if premier<dernier:
 
-       pivot = partitionement(maTable,premier,dernier)
+       pivot = partitionement(tableau,premier,dernier)
 
-       ChoixPivot(maTable,premier,pivot-1)
-       ChoixPivot(maTable,pivot+1,dernier)
+       triRapide(tableau,premier,pivot-1)
+       triRapide(tableau,pivot+1,dernier)
 
 
-def partitionement(maTable,premier,dernier):
-   pivot = maTable[premier]
+def partitionement(tableau,premier,dernier):
+   pivot = tableau[premier]
 
    gauche = premier+1
    droite = dernier
@@ -133,45 +133,43 @@ def partitionement(maTable,premier,dernier):
    fini = False
    while not fini:
 
-       while gauche <= droite and maTable[gauche] <= pivot:
+       while gauche <= droite and tableau[gauche] <= pivot:
            gauche = gauche + 1
 
-       while maTable[droite] >= pivot and droite >= gauche:
+       while tableau[droite] >= pivot and droite >= gauche:
            droite = droite -1
 
        if droite < gauche:
            fini = True
        else:
-           temp = maTable[gauche]
-           maTable[gauche] = maTable[droite]
-           maTable[droite] = temp
+           temp = tableau[gauche]
+           tableau[gauche] = tableau[droite]
+           tableau[droite] = temp
 
-   temp = maTable[premier]
-   maTable[premier] = maTable[droite]
-   maTable[droite] = temp
+   temp = tableau[premier]
+   tableau[premier] = tableau[droite]
+   tableau[droite] = temp
 
 
    return droite
-
-
-
-    #méthode de tri rapide récursive à complèter
+    
+    #mÃ©thode de tri rapide rÃ©cursive Ã  complÃ¨ter
  
       
 #**********************************************************************
-# Couche données (Data)
+# Couche donnÃ©es (Data)
 #**********************************************************************			
 
-# Génération des nombres entier aléatoires et sauvegarde dans un fichier
+# GÃ©nÃ©ration des nombres entier alÃ©atoires et sauvegarde dans un fichier
 
 def initTab(fichier,nb):
-	fichier = open(random.txt,"w")
+	fichier = open(fichier,"w")
 	for i in range(0,nb):
 		nombre = random.randint(0,nb)
 		print ((nombre), file = fichier)
-	fichier.close()
+	fichier.close()        
 	
-# Chargement du fichier dans un tableau en mémoire
+# Chargement du fichier dans un tableau en mÃ©moire
 def loadTab(maTable,fichier,nb):
 	fichier = open(fichier,"r")
 	for i in range(nb):
@@ -179,7 +177,7 @@ def loadTab(maTable,fichier,nb):
 		maTable.append(int(var))
 	fichier.close()
 
-# Sauvegarde du tableau en mémoire dans un fichier
+# Sauvegarde du tableau en mÃ©moire dans un fichier
 def saveTab(maTable,fichier):
 	fichier = open(fichier,"w")	
 	for i in range(0,len(maTable)-1):
